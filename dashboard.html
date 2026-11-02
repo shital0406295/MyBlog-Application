@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - MyBlog</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">MyBlog ✨</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="create-blog.html">Create Blog</a>
+      <a href="login.html">Login</a>
+      <button class="btn" id="darkModeBtn" type="button">🌙 Dark Mode</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-heading">
+        <h2>My Dashboard 📊</h2>
+        <p>Manage your published blogs in one place.</p>
+        <a href="create-blog.html" class="btn">➕ Create New Blog</a>
+      </div>
+
+      <!-- Statistics -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3 id="totalBlogs">0</h3>
+          <p>Total Blogs</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalWords">0</h3>
+          <p>Total Words</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalCategories">0</h3>
+          <p>Categories</p>
+        </div>
+      </div>
+
+      <!-- Search and Filters -->
+      <div class="search-box">
+        <input
+          type="text"
+          id="dashboardSearch"
+          placeholder="🔍 Search your blogs..."
+          aria-label="Search your blogs"
+        >
+
+        <select id="categoryFilter" aria-label="Filter by category">
+          <option value="all">All Categories</option>
+          <option value="Technology">Technology</option>
+          <option value="Education">Education</option>
+          <option value="Travel">Travel</option>
+          <option value="Lifestyle">Lifestyle</option>
+          <option value="Food">Food</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <select id="sortFilter" aria-label="Sort blogs">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="az">Title A-Z</option>
+        </select>
+      </div>
+
+      <p id="dashboardMessage" role="status"></p>
+      <div id="dashboardBlogs" class="blog-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 MyBlog | Manage Your Stories 💜</p>
+  </footer>
+
+  <script>
+    const blogsContainer = document.getElementById("dashboardBlogs");
+    const searchInput = document.getElementById("dashboardSearch");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortFilter = document.getElementById("sortFilter");
+    const dashboardMessage = document.getElementById("dashboardMessage");
+
+    function getBlogs() {
+      try {
+        const blogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+        return Array.isArray(blogs) ? blogs : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveBlogs(blogs) {
+      localStorage.setItem("blogs", JSON.stringify(blogs));
+    }
+
+    function wordCount(text) {
+      return String(text || "").trim()
+        ? String(text).trim().split(/\s+/).length
+        : 0;
+    }
+
+    function updateStats(blogs) {
+      document.getElementById("totalBlogs").textContent = blogs.length;
+
+      const words = blogs.reduce(
+        (total, blog) => total + wordCount(blog.content), 0
+      );
+
+      document.getElementById("totalWords").textContent = words;
+
+      const categories = new Set(
+        blogs.map(blog => blog.category || "Other")
+      );
+
+      document.getElementById("totalCategories").textContent =
+        categories.size;
+    }
+
+    function renderDashboard() {
+      const allBlogs = getBlogs();
+      updateStats(allBlogs);
+
+      const query = searchInput.value.trim().toLowerCase();
+      const selectedCategory = categoryFilter.value;
+      const sortMode = sortFilter.value;
+
+      let filteredBlogs = allBlogs
+        .map((blog, index) => ({ blog, index }))
+        .filter(item => {
+          const blog = item.blog;
+
+          const matchesSearch =
+            String(blog.title || "").toLowerCase().includes(query) ||
+            String(blog.content || "").toLowerCase().includes(query);
+
+          const matchesCategory =
+            selectedCategory === "all" ||
+            (blog.category || "Other") === selectedCategory;
+
+          return matchesSearch && matchesCategory;
+        });
+
+      if (sortMode === "newest") {
+        filteredBlogs.sort((a, b) =>
+          (Number(b.blog.createdAt) || b.index) -
+          (Number(a.blog.createdAt) || a.index)
+        );
+      } else if (sortMode === "oldest") {
+        filteredBlogs.sort((a, b) =>
+          (Number(a.blog.createdAt) || a.index) -
+          (Number(b.blog.createdAt) || b.index)
+        );
+      } else {
+        filteredBlogs.sort((a, b) =>
+          String(a.blog.title || "").localeCompare(
+            String(b.blog.title || "")
+          )
+        );
+      }
+
+      blogsContainer.replaceChildren();
+
+      dashboardMessage.textContent =
+        filteredBlogs.length + " blog(s) displayed.";
+
+      if (filteredBlogs.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty-message";
+        empty.textContent = allBlogs.length === 0
+          ? "📝 You haven't published any blogs yet. Create your first blog!"
+          : "No blogs match your search or category.";
+        blogsContainer.appendChild(empty);
+        return;
+      }
+
+      filteredBlogs.forEach(item => {
+        const blog = item.blog;
+        const originalIndex = item.index;
+
+        const card = document.createElement("article");
+        card.className = "blog-card";
+
+        const title = document.createElement("h3");
+        title.textContent = blog.title || "Untitled Blog";
+
+        const category = document.createElement("p");
+        category.textContent = "📁 " + (blog.category || "Other");
+
+        const date = document.createElement("p");
+        date.textContent = "📅 " + (blog.date || "Date unavailable");
+
+        const content = document.createElement("p");
+        const fullContent = String(blog.content || "");
+        content.textContent = fullContent.length > 130
+          ? fullContent.substring(0, 130) + "..."
+          : fullContent;
+
+        const editButton = document.createElement("button");
+        editButton.className = "btn";
+        editButton.type = "button";
+        editButton.textContent = "✏️ Edit";
+
+        editButton.addEventListener("click", () => {
+          const newTitle = prompt("Enter the new blog title:", blog.title || "");
+
+          if (newTitle === null) return;
+
+          if (!newTitle.trim()) {
+            alert("Blog title cannot be empty.");
+            return;
+          }
+
+          const newContent = prompt(
+            "Enter the new blog content:", blog.content || ""
+          );
+
+          if (newContent === null) return;
+
+          if (!newContent.trim()) {
+            alert("Blog content cannot be empty.");
+            return;
+          }
+
+          const blogs = getBlogs();
+
+          if (!blogs[originalIndex]) return;
+
+          blogs[originalIndex].title = newTitle.trim();
+          blogs[originalIndex].content = newContent.trim();
+          blogs[originalIndex].updatedAt = Date.now();
+
+          try {
+            saveBlogs(blogs);
+            renderDashboard();
+            dashboardMessage.textContent = "✅ Blog updated successfully!";
+          } catch (error) {
+            alert("Unable to save changes.");
+          }
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "btn";
+        deleteButton.type = "button";
+        deleteButton.textContent = "🗑️ Delete";
+
+        deleteButton.addEventListener("click", () => {
+          const confirmed = confirm(
+            'Are you sure you want to delete "' +
+            (blog.title || "Untitled Blog") + '"?'
+          );
+
+          if (!confirmed) return;
+
+          const blogs = getBlogs();
+          blogs.splice(originalIndex, 1);
+
+          try {
+            saveBlogs(blogs);
+            renderDashboard();
+            dashboardMessage.textContent = "Blog deleted successfully.";
+          } catch (error) {
+            alert("Unable to delete this blog.");
+          }
+        });
+
+        card.append(title, category, date, content, editButton, deleteButton);
+        blogsContainer.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener("input", renderDashboard);
+    categoryFilter.addEventListener("change", renderDashboard);
+    sortFilter.addEventListener("change", renderDashboard);
+
+    // Dark mode
+    const darkModeBtn = document.getElementById("darkModeBtn");
+
+    function applyTheme(isDark) {
+      document.body.classList.toggle("dark-mode", isDark);
+      darkModeBtn.textContent = isDark
+        ? "☀️ Light Mode"
+        : "🌙 Dark Mode";
+    }
+
+    let darkMode = false;
+
+    try {
+      darkMode = localStorage.getItem("myBlogDarkMode") === "true";
+    } catch (error) {}
+
+    applyTheme(darkMode);
+
+    darkModeBtn.addEventListener("click", () => {
+      darkMode = !document.body.classList.contains("dark-mode");
+      applyTheme(darkMode);
+
+      try {
+        localStorage.setItem("myBlogDarkMode", String(darkMode));
+      } catch (error) {}
+    });
+
+    renderDashboard();
+  </script>
+
+</body>
+</html>
+

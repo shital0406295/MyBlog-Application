@@ -1,0 +1,405 @@
+
+/* =========================
+   MYBLOG - FINAL STYLES
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #5146e5;
+    --secondary: #8b5cf6;
+    --background: #f5f7ff;
+    --surface: #ffffff;
+    --text: #202544;
+    --muted: #777b91;
+    --border: #e5e7f5;
+    --shadow: 0 5px 20px rgba(34, 34, 68, 0.08);
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+}
+
+a {
+    color: var(--primary);
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button,
+.btn {
+    cursor: pointer;
+}
+
+/* NAVBAR */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 16px 5%;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.logo {
+    margin: 0;
+    color: var(--primary);
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+/* HERO SECTION */
+
+.hero {
+    padding: 65px 7%;
+    text-align: center;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+}
+
+.hero h1 {
+    margin: 0 0 15px;
+    font-size: 38px;
+    line-height: 1.3;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: 0 auto 25px;
+    font-size: 17px;
+}
+
+/* MAIN CONTAINER */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 35px auto;
+}
+
+.section {
+    padding: 35px 0;
+}
+
+.section-heading {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.section-heading h2 {
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+.section-heading p {
+    color: var(--muted);
+}
+
+/* BUTTONS */
+
+.btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 9px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.hero .btn {
+    background: white;
+    color: var(--primary);
+}
+
+.theme-btn {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* SEARCH */
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto 15px;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+}
+
+.search-box button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 9px;
+    background: var(--primary);
+    color: white;
+}
+
+/* FORMS */
+
+.form-container {
+    width: 90%;
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.form-container h1,
+.form-container h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.12);
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-container .btn {
+    width: 100%;
+}
+
+/* BLOG CARDS */
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(230px, 1fr)
+    );
+    gap: 22px;
+}
+
+.blog-card {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    overflow-wrap: anywhere;
+}
+
+.blog-card h3 {
+    margin-top: 0;
+    color: var(--primary);
+}
+
+.blog-card p {
+    white-space: pre-wrap;
+}
+
+.blog-date {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.empty-message {
+    padding: 28px;
+    border-radius: 12px;
+    background: var(--surface);
+    text-align: center;
+}
+
+#searchMessage,
+#message {
+    text-align: center;
+    color: var(--muted);
+}
+
+/* DASHBOARD */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(160px, 1fr)
+    );
+    gap: 18px;
+    margin: 25px 0;
+}
+
+.stat-card {
+    padding: 22px;
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.stat-card h3 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 28px;
+}
+
+/* FOOTER */
+
+footer {
+    margin-top: 40px;
+    padding: 22px;
+    background: #202544;
+    color: white;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* DARK MODE */
+
+body.dark-mode {
+    --background: #121526;
+    --surface: #20243a;
+    --text: #f1f2ff;
+    --muted: #c2c6df;
+    --border: #393e5c;
+    --shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .nav-links a {
+    color: var(--text);
+}
+
+body.dark-mode .blog-card h3 {
+    color: #aaa4ff;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+    color: var(--text);
+}
+
+body.dark-mode .theme-btn {
+    background: var(--secondary);
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 650px) {
+    .navbar {
+        flex-direction: column;
+        padding: 18px 4%;
+    }
+
+    .nav-links {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .hero {
+        padding: 45px 6%;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .container {
+        width: 92%;
+        margin: 25px auto;
+    }
+
+    .form-container {
+        padding: 22px;
+    }
+
+    .search-box {
+        gap: 7px;
+    }
+
+    .search-box button {
+        padding: 10px 12px;
+    }
+}

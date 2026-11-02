@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Blog - MyBlog</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">MyBlog ✨</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-heading">
+        <h2>✍️ Create Your Blog</h2>
+        <p>Write your thoughts and share them with the world.</p>
+      </div>
+
+      <div class="form-container">
+        <form id="blogForm">
+          <div class="form-group">
+            <label for="blogTitle">Blog Title</label>
+            <input
+              type="text"
+              id="blogTitle"
+              maxlength="100"
+              placeholder="Enter an interesting title..."
+              required
+            >
+            <small id="titleCount">0 / 100 characters</small>
+          </div>
+
+          <div class="form-group">
+            <label for="blogCategory">Category</label>
+            <select id="blogCategory" required>
+              <option value="">Choose a category</option>
+              <option value="Technology">Technology</option>
+              <option value="Education">Education</option>
+              <option value="Travel">Travel</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Food">Food</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="blogContent">Blog Content</label>
+            <textarea
+              id="blogContent"
+              rows="10"
+              placeholder="Start writing your story here..."
+              required
+            ></textarea>
+            <small id="wordCount">0 words</small>
+          </div>
+
+          <div class="form-group">
+            <label>Live Preview</label>
+            <article class="blog-card">
+              <h3 id="previewTitle">Your blog title will appear here</h3>
+              <p id="previewCategory">Category: Not selected</p>
+              <p id="previewContent">Your blog preview will appear here as you type.</p>
+            </article>
+          </div>
+
+          <p id="formMessage" role="status"></p>
+
+          <button class="btn" type="button" id="draftBtn">
+            💾 Save Draft
+          </button>
+
+          <button class="btn" type="submit">
+            🚀 Publish Blog
+          </button>
+
+          <button class="btn" type="button" id="resetBtn">
+            Clear Form
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 MyBlog | Share Your Ideas With The World 💜</p>
+  </footer>
+
+  <script>
+    const titleInput = document.getElementById("blogTitle");
+    const categoryInput = document.getElementById("blogCategory");
+    const contentInput = document.getElementById("blogContent");
+    const formMessage = document.getElementById("formMessage");
+
+    const DRAFT_KEY = "myBlogDraft";
+
+    function readBlogs() {
+      try {
+        const blogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+        return Array.isArray(blogs) ? blogs : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function showMessage(message) {
+      formMessage.textContent = message;
+    }
+
+    function updatePreview() {
+      const title = titleInput.value.trim();
+      const category = categoryInput.value;
+      const content = contentInput.value;
+
+      document.getElementById("previewTitle").textContent =
+        title || "Your blog title will appear here";
+
+      document.getElementById("previewCategory").textContent =
+        "Category: " + (category || "Not selected");
+
+      document.getElementById("previewContent").textContent =
+        content || "Your blog preview will appear here as you type.";
+
+      document.getElementById("titleCount").textContent =
+        titleInput.value.length + " / 100 characters";
+
+      const words = content.trim()
+        ? content.trim().split(/\s+/).length
+        : 0;
+
+      document.getElementById("wordCount").textContent =
+        words + (words === 1 ? " word" : " words");
+    }
+
+    titleInput.addEventListener("input", updatePreview);
+    categoryInput.addEventListener("change", updatePreview);
+    contentInput.addEventListener("input", updatePreview);
+
+    function saveDraft() {
+      const draft = {
+        title: titleInput.value,
+        category: categoryInput.value,
+        content: contentInput.value
+      };
+
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+        showMessage("✅ Draft saved! You can continue editing later.");
+      } catch (error) {
+        showMessage("Unable to save draft in this browser.");
+      }
+    }
+
+    document.getElementById("draftBtn").addEventListener("click", saveDraft);
+
+    document.getElementById("blogForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const title = titleInput.value.trim();
+      const category = categoryInput.value;
+      const content = contentInput.value.trim();
+
+      if (!title || !category || !content) {
+        showMessage("Please fill in the title, category and content.");
+        return;
+      }
+
+      try {
+        const blogs = readBlogs();
+
+        blogs.push({
+          title: title,
+          category: category,
+          content: content,
+          date: new Date().toLocaleDateString(),
+          createdAt: Date.now()
+        });
+
+        localStorage.setItem("blogs", JSON.stringify(blogs));
+        localStorage.removeItem(DRAFT_KEY);
+
+        showMessage("🎉 Blog published successfully!");
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1000);
+      } catch (error) {
+        showMessage("Could not publish. Browser storage may be full.");
+      }
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      document.getElementById("blogForm").reset();
+      updatePreview();
+      showMessage("Form cleared.");
+    });
+
+    // Restore previously saved draft
+    try {
+      const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+
+      if (draft) {
+        titleInput.value = draft.title || "";
+        categoryInput.value = draft.category || "";
+        contentInput.value = draft.content || "";
+      }
+    } catch (error) {}
+
+    updatePreview();
+  </script>
+
+</body>
+</html>

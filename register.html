@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | MyBlog</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #eeeaff, #f7f5ff, #e8edff);
+      color: #242447;
+    }
+
+    .register-navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 7%;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 3px 18px rgba(45, 35, 100, 0.08);
+    }
+
+    .register-logo {
+      font-size: 26px;
+      font-weight: 800;
+      color: #5b43e8;
+      text-decoration: none;
+    }
+
+    .register-nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .register-nav-links a {
+      text-decoration: none;
+      color: #303052;
+      font-weight: 600;
+    }
+
+    .register-nav-links a:hover {
+      color: #6546ef;
+    }
+
+    .register-wrapper {
+      min-height: calc(100vh - 130px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 35px 16px;
+    }
+
+    .register-card {
+      width: 100%;
+      max-width: 460px;
+      padding: 34px;
+      background: #fff;
+      border: 1px solid #eeebff;
+      border-radius: 24px;
+      box-shadow: 0 18px 55px rgba(76, 57, 170, 0.14);
+    }
+
+    .register-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #6448f0, #9873ff);
+      color: #fff;
+      font-size: 33px;
+      box-shadow: 0 9px 20px rgba(100, 72, 240, 0.24);
+    }
+
+    .register-heading {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .register-heading h1 {
+      margin: 0 0 10px;
+      color: #25234a;
+      font-size: 28px;
+    }
+
+    .register-heading p {
+      margin: 0;
+      color: #77768f;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .register-field {
+      margin-bottom: 18px;
+    }
+
+    .register-field label.field-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #303052;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .register-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 13px;
+      border: 1px solid #e1def4;
+      border-radius: 12px;
+      background: #faf9ff;
+      transition: 0.2s;
+    }
+
+    .register-input-wrap:focus-within {
+      border-color: #7659f3;
+      box-shadow: 0 0 0 3px rgba(118, 89, 243, 0.12);
+    }
+
+    .register-input-wrap .input-icon {
+      font-size: 18px;
+    }
+
+    .register-input-wrap input {
+      width: 100%;
+      min-width: 0;
+      padding: 14px 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #272544;
+      font-size: 15px;
+    }
+
+    .register-input-wrap input:focus {
+      box-shadow: none;
+    }
+
+    .password-hint {
+      display: block;
+      margin-top: 7px;
+      color: #77768f;
+      font-size: 12px;
+    }
+
+    .strength-track {
+      height: 5px;
+      margin-top: 9px;
+      border-radius: 10px;
+      background: #e9e6f5;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      width: 0;
+      height: 100%;
+      background: #8b5cf6;
+      transition: width 0.2s;
+    }
+
+    .show-password {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 3px 0 21px;
+      color: #5d5b78;
+      font-size: 14px;
+    }
+
+    .show-password input {
+      width: 16px;
+      height: 16px;
+      accent-color: #6548ed;
+    }
+
+    .register-button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(100deg, #5b43e8, #8b5cf6);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 7px 17px rgba(91, 67, 232, 0.22);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .register-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 11px 23px rgba(91, 67, 232, 0.3);
+    }
+
+    #registerMessage {
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .login-link {
+      text-align: center;
+      margin: 22px 0 0;
+      color: #77768f;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .login-link a {
+      color: #6548ed;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .register-footer {
+      padding: 17px;
+      text-align: center;
+      color: #77768f;
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .register-navbar {
+        padding: 16px 5%;
+      }
+
+      .register-logo {
+        font-size: 22px;
+      }
+
+      .register-nav-links {
+        gap: 13px;
+        font-size: 13px;
+      }
+
+      .register-card {
+        padding: 27px 21px;
+        border-radius: 20px;
+      }
+
+      .register-heading h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="register-navbar">
+    <a href="index.html" class="register-logo">MyBlog ✨</a>
+
+    <div class="register-nav-links">
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <main class="register-wrapper">
+    <section class="register-card">
+
+      <div class="register-icon">🚀</div>
+
+      <div class="register-heading">
+        <h1>Create Account</h1>
+        <p>Join our community and start sharing your stories.</p>
+      </div>
+
+      <form id="registerForm">
+
+        <div class="register-field">
+          <label class="field-label" for="name">Full Name</label>
+          <div class="register-input-wrap">
+            <span class="input-icon">👤</span>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your full name"
+              maxlength="60"
+              autocomplete="name"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="register-field">
+          <label class="field-label" for="email">Email Address</label>
+          <div class="register-input-wrap">
+            <span class="input-icon">✉️</span>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="register-field">
+          <label class="field-label" for="password">Password</label>
+          <div class="register-input-wrap">
+            <span class="input-icon">🔑</span>
+            <input
+              type="password"
+              id="password"
+              placeholder="Create a password"
+              minlength="6"
+              autocomplete="new-password"
+              required
+            >
+          </div>
+
+          <div class="strength-track">
+            <div class="strength-fill" id="strengthFill"></div>
+          </div>
+          <small class="password-hint" id="strengthText">
+            Use at least 6 characters.
+          </small>
+        </div>
+
+        <div class="register-field">
+          <label class="field-label" for="confirmPassword">
+            Confirm Password
+          </label>
+          <div class="register-input-wrap">
+            <span class="input-icon">🔒</span>
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="Enter password again"
+              minlength="6"
+              autocomplete="new-password"
+              required
+            >
+          </div>
+        </div>
+
+        <label class="show-password">
+          <input type="checkbox" id="showPassword">
+          Show passwords
+        </label>
+
+        <p id="registerMessage" role="status" aria-live="polite"></p>
+
+        <button class="register-button" type="submit">
+          Create My Account →
+        </button>
+
+      </form>
+
+      <p class="login-link">
+        Already have an account?
+        <a href="login.html">Login here</a>
+      </p>
+
+    </section>
+  </main>
+
+  <footer class="register-footer">
+    © 2026 MyBlog · Your story starts here 💜
+  </footer>
+
+  <script>
+    const registerForm = document.getElementById("registerForm");
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmPassword");
+    const registerMessage = document.getElementById("registerMessage");
+
+    document.getElementById("showPassword").addEventListener("change", function() {
+      const type = this.checked ? "text" : "password";
+      passwordInput.type = type;
+      confirmInput.type = type;
+    });
+
+    // Simple password-strength indicator
+    passwordInput.addEventListener("input", function() {
+      const password = this.value;
+      let score = 0;
+
+      if (password.length >= 6) score++;
+      if (password.length >= 10) score++;
+      if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+
+      const width = [0, 20, 40, 60, 80, 100][score];
+      document.getElementById("strengthFill").style.width = width + "%";
+
+      const labels = [
+        "Use at least 6 characters.",
+        "Very weak",
+        "Weak",
+        "Fair",
+        "Good",
+        "Strong"
+      ];
+
+      document.getElementById("strengthText").textContent =
+        password.length === 0 ? labels[0] : labels[score];
+    });
+
+    registerForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email")
+        .value.trim().toLowerCase();
+      const password = passwordInput.value;
+      const confirmPassword = confirmInput.value;
+
+      if (name.length < 2) {
+        registerMessage.textContent = "Please enter your full name.";
+        return;
+      }
+
+      if (password.length < 6) {
+        registerMessage.textContent =
+          "Password must contain at least 6 characters.";
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        registerMessage.textContent =
+          "Passwords do not match. Please try again.";
+        return;
+      }
+
+      let users = [];
+
+      try {
+        users = JSON.parse(localStorage.getItem("myBlogUsers") || "[]");
+      } catch (error) {
+        users = [];
+      }
+
+      if (!Array.isArray(users)) users = [];
+
+      if (users.some(user => user.email === email)) {
+        registerMessage.textContent =
+          "This email is already registered. Please login.";
+        return;
+      }
+
+      /*
+        Demo only: passwords are stored in browser storage.
+        Do not use a real or reused password.
+        A real application requires secure backend authentication.
+      */
+      users.push({
+        name: name,
+        email: email,
+        password: password
+      });
+
+      try {
+        localStorage.setItem("myBlogUsers", JSON.stringify(users));
+
+        registerMessage.textContent =
+          "Account created successfully! Redirecting to login...";
+
+        registerForm.reset();
+        document.getElementById("strengthFill").style.width = "0";
+        document.getElementById("strengthText").textContent =
+          "Use at least 6 characters.";
+
+        setTimeout(function() {
+          window.location.href = "login.html";
+        }, 1000);
+
+      } catch (error) {
+        registerMessage.textContent =
+          "Unable to create account. Browser storage may be unavailable.";
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyBlog | Stories That Inspire</title>
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7ff;
+  color: #29264d;
+}
+
+.site-header {
+  background: white;
+  padding: 22px 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.brand {
+  color: #6548ee;
+  font-size: 35px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.top-nav a {
+  color: #34304f;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.top-nav a.btn {
+  background: linear-gradient(135deg, #6045ed, #9661f5);
+  color: white;
+  padding: 17px 23px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #5038d4, #9260f7);
+  color: white;
+  text-align: center;
+  padding: 75px 6% 85px;
+  overflow: hidden;
+}
+
+.eyebrow {
+  display: inline-block;
+  border: 1px solid #ffffff80;
+  border-radius: 30px;
+  padding: 15px 22px;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 7vw, 68px);
+  line-height: 1.15;
+  margin: 15px 0 25px;
+  letter-spacing: -1px;
+}
+
+.gradient-text {
+  color: #ffe28a;
+}
+
+.hero p {
+  max-width: 700px;
+  margin: 0 auto 35px;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #f1eaff;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  border-radius: 18px;
+  padding: 17px 24px;
+  background: linear-gradient(135deg, #6045ed, #9661f5);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-light {
+  background: white;
+  color: #6548ee;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #ffffffa0;
+  color: white;
+}
+
+.hero-note {
+  margin-top: 35px;
+  color: #f0eaff;
+}
+
+.section {
+  padding: 55px 5%;
+}
+
+.section-heading h2 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.muted {
+  color: #77738e;
+  line-height: 1.7;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.toolbar input,
+.toolbar select {
+  flex: 1 1 180px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #ded9f4;
+  border-radius: 12px;
+  background: white;
+  font-size: 14px;
+}
+
+.toolbar .btn {
+  flex: 0 0 auto;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.blog-card {
+  padding: 22px;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 5px 20px #30205e12;
+  overflow-wrap: anywhere;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 35px 15px;
+}
+
+.empty-state h3 {
+  font-size: 24px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.feature-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  padding: 45px 6%;
+  background: white;
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 35px;
+}
+
+.feature-strip p {
+  color: #77738e;
+  line-height: 1.6;
+}
+
+.bottom-cta {
+  background: linear-gradient(135deg, #5038d4, #9260f7);
+  color: white;
+  padding: 45px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.bottom-cta h2 {
+  font-size: 30px;
+}
+
+.site-footer {
+  padding: 28px 5%;
+  text-align: center;
+}
+
+.site-footer .brand {
+  font-size: 25px;
+}
+
+.site-footer p {
+  color: #77738e;
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: 20px 10px;
+  }
+
+  .brand {
+    font-size: 31px;
+  }
+
+  .top-nav {
+    gap: 4px;
+  }
+
+  .top-nav a {
+    padding: 9px;
+    font-size: 13px;
+  }
+
+  .top-nav a.btn {
+    padding: 12px 15px;
+  }
+
+  .hero {
+    padding: 55px 18px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .section {
+    padding: 40px 18px;
+  }
+
+  .bottom-cta {
+    padding: 35px 20px;
+  }
+}
+</style>
+</head>
+
+<body data-page="home">
+
+<header class="site-header">
+  <a class="brand" href="index.html">MyBlog ✨</a>
+
+  <nav class="top-nav">
+    <a href="index.html">Home</a>
+    <a href="#explore">Explore</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html">Login</a>
+    <a class="btn" href="register.html">Join Us</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <span class="eyebrow">✦ YOUR SPACE. YOUR STORIES. YOUR VOICE.</span>
+
+  <h1>
+    Every Idea Has a Story.<br>
+    <span class="gradient-text">Share Yours.</span>
+  </h1>
+
+  <p>
+    Turn your thoughts into meaningful stories.
+    Discover fresh ideas, express your creativity,
+    and inspire the world — one blog at a time.
+  </p>
+
+  <div class="hero-actions">
+    <a class="btn btn-light" href="create-blog.html">
+      ✍️ Start Writing
+    </a>
+
+    <a class="btn btn-outline" href="#explore">
+      Explore Stories ↓
+    </a>
+  </div>
+
+  <div class="hero-note">
+    ✨ Your creativity can inspire someone today!
+  </div>
+</section>
+
+<section class="section" id="explore">
+
+  <div class="section-heading">
+    <h2>Discover Stories 📚</h2>
+    <p class="muted">
+      Explore ideas, learn something new, and find inspiration.
+    </p>
+  </div>
+
+  <div class="toolbar">
+    <input
+      id="blogSearch"
+      type="search"
+      placeholder="🔍 Search blogs..."
+      aria-label="Search blogs"
+    >
+
+    <select id="categoryFilter" aria-label="Filter blogs">
+      <option value="all">All Categories</option>
+      <option value="Technology">Technology</option>
+      <option value="Education">Education</option>
+      <option value="Lifestyle">Lifestyle</option>
+      <option value="Career">Career</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <select id="sortBlogs" aria-label="Sort blogs">
+      <option value="newest">Newest First</option>
+      <option value="oldest">Oldest First</option>
+      <option value="title">Title A–Z</option>
+    </select>
+
+  </div>
+
+  <div id="homeBlogList" class="blog-grid"></div>
+
+  <div id="homeEmpty" class="empty-state">
+    <div style="font-size:45px">📝</div>
+    <h3>No blogs found yet</h3>
+    <p class="muted">
+      Be the first to share an idea with the community!
+    </p>
+    <a class="btn" href="create-blog.html">
+      Create Your First Blog
+    </a>
+  </div>
+
+</section>
+
+<section class="feature-strip">
+
+  <div>
+    <div class="feature-icon">✍️</div>
+    <h3>Write Freely</h3>
+    <p>Turn your thoughts and learning into stories.</p>
+  </div>
+
+  <div>
+    <div class="feature-icon">🔎</div>
+    <h3>Discover Ideas</h3>
+    <p>Explore blogs and find topics you enjoy.</p>
+  </div>
+
+  <div>
+    <div class="feature-icon">🚀</div>
+    <h3>Grow Together</h3>
+    <p>Share your creativity one post at a time.</p>
+  </div>
+
+</section>
+
+<section class="bottom-cta">
+  <div>
+    <span class="eyebrow">READY TO BEGIN?</span>
+    <h2>Your Next Story Starts Here.</h2>
+    <p>Join MyBlog and publish your first blog.</p>
+  </div>
+
+  <a class="btn btn-light" href="register.html">
+    Create an Account →
+  </a>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <a class="brand" href="index.html">MyBlog ✨</a>
+  <p>Made with 💜 for blog lovers · © <span id="year"></span></p>
+</footer>
+
+</body>
+</html>

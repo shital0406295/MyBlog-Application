@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | My Blog</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dbeafe, #f5d0fe, #fce7f3);
+  color: #1f2937;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 18px 6%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 3px 15px #00000010;
+}
+
+.logo {
+  color: #7c3aed;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+nav a {
+  text-decoration: none;
+  color: #6d28d9;
+  background: #ede9fe;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.container {
+  min-height: 82vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 15px;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 35px 28px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 15px 40px #6d28d930;
+}
+
+.icon {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+h1 {
+  text-align: center;
+  color: #7c3aed;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+label {
+  display: block;
+  margin: 16px 0 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+  background: #fafafa;
+}
+
+input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px #8b5cf625;
+}
+
+.show-password {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+  font-size: 13px;
+}
+
+.show-password label {
+  margin: 0;
+  font-weight: normal;
+}
+
+.login-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+}
+
+.register-text {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 14px;
+}
+
+.register-text a {
+  color: #7c3aed;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#message {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  text-align: center;
+  padding: 18px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+@media (max-width: 380px) {
+  nav {
+    padding: 15px;
+  }
+
+  .logo {
+    font-size: 21px;
+  }
+
+  .login-box {
+    padding: 28px 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">✦ My Blog</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="register.html">Register</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="login-box">
+
+    <div class="icon">📚</div>
+
+    <h1>Welcome Back!</h1>
+
+    <p class="subtitle">
+      Login to explore amazing blogs and share your ideas.
+    </p>
+
+    <form id="loginForm">
+
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        autocomplete="email"
+        required
+      >
+
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+        autocomplete="current-password"
+        required
+      >
+
+      <div class="show-password">
+        <input type="checkbox" id="showPassword">
+        <label for="showPassword">Show Password</label>
+      </div>
+
+      <button type="submit" class="login-btn">
+        Login →
+      </button>
+
+      <p id="message" role="status"></p>
+
+    </form>
+
+    <p class="register-text">
+      New to My Blog?
+      <a href="register.html">Create an Account</a>
+    </p>
+
+  </div>
+</div>
+
+<footer>
+  Made with 💜 for blog lovers
+</footer>
+
+<script>
+const loginForm = document.getElementById("loginForm");
+const passwordInput = document.getElementById("password");
+const showPassword = document.getElementById("showPassword");
+const message = document.getElementById("message");
+
+showPassword.addEventListener("change", function () {
+  passwordInput.type = this.checked ? "text" : "password";
+});
+
+loginForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email")
+    .value.trim().toLowerCase();
+
+  const password = passwordInput.value;
+
+  try {
+    const users = JSON.parse(
+      localStorage.getItem("myBlogUsers") || "[]"
+    );
+
+    const user = users.find(function (item) {
+      return item.email &&
+        item.email.toLowerCase() === email &&
+        item.password === password;
+    });
+
+    if (user) {
+      localStorage.setItem(
+        "myBlogCurrentUser",
+        JSON.stringify(user)
+      );
+
+      message.style.color = "#16a34a";
+      message.textContent = "Login successful! Opening dashboard...";
+
+      setTimeout(function () {
+        window.location.href = "dashboard.html";
+      }, 700);
+
+    } else {
+      message.style.color = "#dc2626";
+      message.textContent =
+        "Invalid email or password. Please register first.";
+    }
+
+  } catch (error) {
+    message.style.color = "#dc2626";
+    message.textContent =
+      "Unable to login. Please try again.";
+  }
+});
+</script>
+
+</body>
+</html>
+    
